@@ -12,6 +12,7 @@ package com.bank.models;
 import com.bank.models.accounts.Account;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -60,14 +61,16 @@ public class Bank {
     //Dans la classe Banque, ajoutez une méthode avoirDesComptes(Personne titulaire)
     // qui calcule le total des avoirs de tous les comptes appartenant à cette personne.
 
-    public void getSumAccountsFromHolder(Person holder) {
-
+    public double getSumAccountsFromHolder(Person holder) {
         double sum = 0;
+        List<Account> accounts = this._accounts.values().stream().filter(a -> a.getHolder().toString().equals(holder.toString())).toList();
 
-        for(Account a: _accounts.values()) {
-            if(a.getHolder().equals(holder.toString())) calculateBalancesSum(a, sum);
+        for(Account a: accounts) {
+            calculateBalancesSum(a, sum);
         }
+        return sum;
     }
+
     public String accountsToString() {
         StringBuilder str = new StringBuilder();
         for(Account a : _accounts.values()) {
