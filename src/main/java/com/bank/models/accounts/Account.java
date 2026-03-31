@@ -1,5 +1,6 @@
 package com.bank.models.accounts;
 
+import com.bank.exceptions.InsufficientBalance;
 import com.bank.models.Person;
 
 import java.util.Objects;
@@ -47,11 +48,13 @@ public abstract class Account {
         withdraw(amount, 0);
     }
     protected void withdraw(double amount, double credit) {
-        if(amount > this._balance + credit || amount < 0) {
-            throw new RuntimeException("You cannot take over: " + (this._balance + credit));
+        if(amount < 0) throw new IllegalArgumentException("amount cannot be negative");
+        if(amount > this._balance + credit) {
+            throw new InsufficientBalance(this, this.getBalance());
         }
         this._balance -= amount;
     }
+
     protected void deposite(int amount) {
         if(amount < 0) throw new RuntimeException("Error, you cannot deposite a negative number");
         this._balance += amount;
