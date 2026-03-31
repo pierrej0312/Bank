@@ -30,9 +30,7 @@ public class Current extends Account {
     @Override
     protected double calculateInterest() {
         //Dans Courant : si le solde est positif, le taux est de 3%, sinon il est de 9,75%.
-
-        if(super.getBalance() > 0) return 0.03;
-        else return 0.0975;
+        return this.getBalance() > 0 ? 0.03 : 0.0975;
     }
 
     @Override
